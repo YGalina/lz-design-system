@@ -9,6 +9,12 @@
 /* Ролики без звука запускаются сами в любом браузере: React теряет атрибут muted, возвращаем его */
 (function(){function fix(r){r.querySelectorAll('video').forEach(function(v){if(!v.muted){v.muted=true;v.defaultMuted=true;}v.setAttribute('muted','');v.playsInline=true;if(v.paused&&v.getClientRects().length){var p=v.play();if(p&&p.catch)p.catch(function(){});}});r.querySelectorAll('*').forEach(function(e){if(e.shadowRoot)fix(e.shadowRoot);});}setInterval(function(){fix(document);},700);})();
 </script>
+<script>
+/* Лист «Видео»: ссылка меняет ролик в плеере своего листа, активная ссылка – тёмным золотом */
+window.lzVideo=function(a){var s=a.closest("section");if(!s)return true;var v=s.querySelector("video.lz-player");if(!v)return true;if(a.getAttribute("aria-current")==="true")return false;s.querySelectorAll("a[data-video]").forEach(function(l){l.removeAttribute("aria-current");l.style.color="#30373f";l.style.opacity=".72";l.lastElementChild.style.textDecoration="none";});a.setAttribute("aria-current","true");a.style.color="#805921";a.style.opacity="1";a.lastElementChild.style.textDecoration="underline";v.style.opacity="0";setTimeout(function(){v.poster=a.dataset.poster||"";v.src=a.dataset.video;v.muted=true;var p=v.play();if(p&&p.catch)p.catch(function(){});v.style.opacity="1";},300);var c=s.querySelector(".lz-player-caption");if(c)c.innerHTML=a.dataset.title+" · вставка 16&nbsp;:&nbsp;9, без рамки и&nbsp;подписи поверх";return false;};
+/* Сборщик страницы убирает атрибуты onclick, поэтому ловим нажатие на уровне документа */
+document.addEventListener("click",function(e){var a=e.target&&e.target.closest?e.target.closest("a[data-video]"):null;if(!a)return;e.preventDefault();e.stopPropagation();window.lzVideo(a);},true);
+</script>
 </head>
 <body>
 <template id="__bundler_thumbnail" data-bg-color="#30373f"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#30373f"/><text x="600" y="470" font-size="260" text-anchor="middle" fill="#ffecba" font-family="serif">ЛЗ</text></svg></template>
@@ -383,18 +389,24 @@ a{color:#c38f41}a:hover{color:#ffecba}
 <div style="position:absolute;right:96px;bottom:96px;display:inline-flex;align-items:center;height:76px;padding:0 44px;border-radius:38px;white-space:nowrap;flex-shrink:0;font-weight:500;font-size:24px;letter-spacing:.08em;text-transform:uppercase;box-sizing:border-box;background:#ab7c35;color:#fff">Забронировать</div>
 </section>
 
-<section data-label="24 Видео" data-screen-label="24 Видео" style="position:relative;overflow:hidden;background:#30373f;color:#b9b5b0;font-family:Montserrat,sans-serif">
-<div style="position:absolute;left:96px;top:96px;width:760px">
-<div style="font-weight:600;font-size:24px;letter-spacing:.18em;text-transform:uppercase;color:#c38f41">Видео</div>
-<h2 style="margin:20px 0 28px;font-family:'Tenor Sans',serif;font-weight:400;font-size:60px;line-height:1.1;text-transform:uppercase;color:#ffecba">Вставка или постер</h2>
-<p style="margin:0;font-weight:500;font-size:28px;line-height:1.45;text-wrap:pretty">Ролики «Зима_…» собраны из&nbsp;фото со&nbsp;сменой кадра: только во&nbsp;вставку или как постер, не&nbsp;живым фоном на&nbsp;весь лист. Летние ролики можно ставить фоном.</p>
-<div style="margin-top:48px;font-weight:600;font-size:24px;letter-spacing:.18em;text-transform:uppercase;font-size:20px;color:#c38f41">Брать</div>
-<div style="margin-top:12px;font-weight:500;font-size:24px;line-height:1.6">Лето_вертолёт_на_берегу_устья<br>Лето_море_лес_и_озёра_с_воздуха, 8 с<br>Зима_рыбалка_вертолёт_снегоход_маяк<br>Зима_Ан-2_вертолёт_надо_льдом_лодка</div>
+<section data-label="24 Видео" data-screen-label="24 Видео" style="position:relative;overflow:hidden;background:#f6f1e9;color:#30373f;font-family:Montserrat,sans-serif">
+<div style="position:absolute;left:96px;top:96px;width:640px">
+<div style="font-weight:600;font-size:24px;letter-spacing:.18em;text-transform:uppercase;color:#805921">Видео</div>
+<h2 style="margin:20px 0 28px;font-family:'Tenor Sans',serif;font-weight:400;font-size:56px;line-height:1.12">Плеер и&nbsp;ссылки</h2>
+<p style="margin:0;font-size:28px;line-height:1.45;text-wrap:pretty">Пять роликов 16&nbsp;:&nbsp;9 без звука, по&nbsp;кругу. Нажмите на&nbsp;название&nbsp;– ролик сменится в&nbsp;плеере.</p>
+<nav aria-label="Ролики" style="margin-top:40px;border-top:1px solid #e6d8c2">
+<a href="assets/video/video-1.mp4" data-video="assets/video/video-1.mp4" data-poster="assets/photos/video-1.jpg" data-title="Видео 1 – вертолёт на берегу" aria-current="true" style="display:flex;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid #e6d8c2;text-decoration:none;color:#805921;opacity:1;cursor:pointer;transition:color .3s,opacity .3s"><span style="font-family:'Tenor Sans',serif;font-size:28px;min-width:124px;white-space:nowrap">Видео 1</span><span style="font-weight:500;font-size:28px;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:8px">вертолёт на берегу</span></a>
+<a href="assets/video/video-2.mp4" data-video="assets/video/video-2.mp4" data-poster="assets/photos/video-2.jpg" data-title="Видео 2 – море, лес и озёра" style="display:flex;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid #e6d8c2;text-decoration:none;color:#30373f;opacity:.72;cursor:pointer;transition:color .3s,opacity .3s"><span style="font-family:'Tenor Sans',serif;font-size:28px;min-width:124px;white-space:nowrap">Видео 2</span><span style="font-weight:500;font-size:28px;text-decoration:none;text-decoration-thickness:1px;text-underline-offset:8px">море, лес и озёра</span></a>
+<a href="assets/video/video-3.mp4" data-video="assets/video/video-3.mp4" data-poster="assets/photos/video-3.jpg" data-title="Видео 3 – зима: рыбалка и маяк" style="display:flex;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid #e6d8c2;text-decoration:none;color:#30373f;opacity:.72;cursor:pointer;transition:color .3s,opacity .3s"><span style="font-family:'Tenor Sans',serif;font-size:28px;min-width:124px;white-space:nowrap">Видео 3</span><span style="font-weight:500;font-size:28px;text-decoration:none;text-decoration-thickness:1px;text-underline-offset:8px">зима: рыбалка и маяк</span></a>
+<a href="assets/video/video-4.mp4" data-video="assets/video/video-4.mp4" data-poster="assets/photos/video-4.jpg" data-title="Видео 4 – зима: Ан-2 над льдом" style="display:flex;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid #e6d8c2;text-decoration:none;color:#30373f;opacity:.72;cursor:pointer;transition:color .3s,opacity .3s"><span style="font-family:'Tenor Sans',serif;font-size:28px;min-width:124px;white-space:nowrap">Видео 4</span><span style="font-weight:500;font-size:28px;text-decoration:none;text-decoration-thickness:1px;text-underline-offset:8px">зима: Ан-2 над льдом</span></a>
+<a href="assets/video/video-5.mp4" data-video="assets/video/video-5.mp4" data-poster="assets/photos/video-5.jpg" data-title="Видео 5 – рыбалка и уха" style="display:flex;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid #e6d8c2;text-decoration:none;color:#30373f;opacity:.72;cursor:pointer;transition:color .3s,opacity .3s"><span style="font-family:'Tenor Sans',serif;font-size:28px;min-width:124px;white-space:nowrap">Видео 5</span><span style="font-weight:500;font-size:28px;text-decoration:none;text-decoration-thickness:1px;text-underline-offset:8px">рыбалка и уха</span></a>
+</nav>
 </div>
-<div style="position:absolute;right:96px;top:50%;transform:translateY(-50%);width:820px">
-<video src="assets/video/heli-shore.mp4" poster="assets/photos/solovki.jpg" muted loop autoplay playsinline style="display:block;width:820px;height:461px;object-fit:cover;background:#30373f"></video>
-<div style="margin-top:20px;font-weight:500;font-size:24px">Вставка 16 : 9, без рамки и&nbsp;подписи поверх</div>
+<div style="position:absolute;right:96px;top:50%;transform:translateY(-50%);width:960px">
+<video class="lz-player" data-print-poster="1" src="assets/video/video-1.mp4" poster="assets/photos/video-1.jpg" muted loop autoplay playsinline style="display:block;width:960px;height:540px;object-fit:cover;background:#e6d8c2;transition:opacity .3s"></video>
+<div class="lz-player-caption" style="margin-top:20px;font-size:24px;opacity:.72">Видео 1 – вертолёт на берегу · вставка 16&nbsp;:&nbsp;9, без рамки и&nbsp;подписи поверх</div>
 </div>
+<script type="application/json" class="lz-videos">[{"id":"video-1","title":"Видео 1","name":"вертолёт на берегу","file":"assets/video/video-1.mp4"},{"id":"video-2","title":"Видео 2","name":"море, лес и озёра","file":"assets/video/video-2.mp4"},{"id":"video-3","title":"Видео 3","name":"зима: рыбалка и маяк","file":"assets/video/video-3.mp4"},{"id":"video-4","title":"Видео 4","name":"зима: Ан-2 над льдом","file":"assets/video/video-4.mp4"},{"id":"video-5","title":"Видео 5","name":"рыбалка и уха","file":"assets/video/video-5.mp4"}]</script>
 </section>
 
 <section data-label="25 Носитель: рилс" data-screen-label="25 Носитель: рилс" style="position:relative;overflow:hidden;background:#30373f;color:#b9b5b0;font-family:Montserrat,sans-serif">
