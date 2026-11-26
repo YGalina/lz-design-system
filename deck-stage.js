@@ -161,8 +161,8 @@
       position: fixed;
       inset: 0;
       display: block;
-      background: #000;
-      color: #fff;
+      background: #f6f1e9;
+      color: #30373f;
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
       overflow: hidden;
       -webkit-tap-highlight-color: transparent;
@@ -196,7 +196,7 @@
        * there while disappearing into the white of light decks. A
        * box-shadow, not outline/border: it follows any canvas rounding
        * and adds no layout size. */
-      box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 0 1px rgba(48, 55, 63, 0.10);
     }
 
     /* Slides live in light DOM (via <slot>) so authored CSS still applies.
@@ -327,8 +327,8 @@
       top: 0;
       bottom: 0;
       width: var(--deck-rail-w, 188px);
-      background: #141414;
-      border-right: 1px solid rgba(255,255,255,0.08);
+      background: #ece5d8;
+      border-right: 1px solid rgba(48,55,63,0.10);
       overflow-y: auto;
       overflow-x: hidden;
       padding: 12px 10px;
@@ -338,7 +338,7 @@
       gap: 12px;
       z-index: 2147482500;
       scrollbar-width: thin;
-      scrollbar-color: rgba(255,255,255,0.18) transparent;
+      scrollbar-color: rgba(48,55,63,0.18) transparent;
     }
     .rail::-webkit-scrollbar { width: 8px; }
     .rail::-webkit-scrollbar-track { background: transparent; margin: 2px; }
@@ -391,7 +391,7 @@
       font-size: 11px;
       font-weight: 500;
       text-align: right;
-      color: rgba(255,255,255,0.55);
+      color: rgba(48,55,63,0.55);
       padding-top: 2px;
       font-variant-numeric: tabular-nums;
     }
@@ -407,9 +407,9 @@
       overflow: hidden;
       transition: outline-color 120ms ease;
     }
-    .thumb:hover .frame { outline-color: rgba(255,255,255,0.25); }
+    .thumb:hover .frame { outline-color: rgba(48,55,63,0.25); }
     .thumb { outline: none; }
-    .thumb:focus-visible .frame { outline-color: rgba(255,255,255,0.5); }
+    .thumb:focus-visible .frame { outline-color: rgba(48,55,63,0.5); }
     .thumb[data-selected] .num { color: #fff; }
     .thumb[data-selected] .frame {
       outline-color: rgba(217,119,87,0.65);
@@ -427,7 +427,7 @@
        instead of the moving element itself. */
     .thumb[data-dragging] { opacity: 0.9; z-index: 30; pointer-events: none; }
     .thumb[data-dragging] .frame {
-      outline-color: rgba(255,255,255,0.5);
+      outline-color: rgba(48,55,63,0.5);
       box-shadow: 0 6px 24px rgba(0,0,0,0.5);
     }
     .thumb::before {
