@@ -158,6 +158,7 @@
 
   const stylesheet = `
     :host {
+      color-scheme: only light;
       position: fixed;
       inset: 0;
       display: block;
